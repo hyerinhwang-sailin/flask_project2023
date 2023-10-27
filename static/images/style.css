@@ -1,0 +1,32 @@
+.navbar {
+    background-color: #006400; #이화그린!
+    color: #fff; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar__logo a {
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar__menu {
+    list-style: none;
+    display: flex;
+}
+
+.navbar__menu li {
+    margin-right: 20px;
+}
+
+.navbar__menu li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar__toogleBtn {
+    display: none; 
+}
