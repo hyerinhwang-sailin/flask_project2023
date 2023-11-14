@@ -11,7 +11,8 @@ DB = DBhandler()
 
 @application.route("/")
 def hello():
-    return render_template("index.html")
+    #return render_template("index.html")
+    return redirect(url_for('view_list'))
 
 
 @application.route("/reg_items")
@@ -21,7 +22,24 @@ def reg_items():
 
 @application.route("/list")
 def view_list():
-    return render_template("list.html")
+    page = request.args.get("page", 0, type=int)
+    per_page = 6 # item count to display per page
+    per_row = 3# item count to display per row
+    row_count = int(per_page/per_row)
+    start_idx=per_page*page
+    end_idx=per_page*(page+1)
+    data = DB.get_items() #read the table
+    item_counts = len(data)
+    data = dict(list(data.items())[start_idx:end_idx])
+    tot_count = len(data)
+    for i in range(row_count):#last row
+        if (i == row_count-1) and (tot_count%per_row != 0):
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
+        else: 
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:(i+1)*per_row])
+    return render_template("list.html", datas=data.items(), row1=locals()['data_0'].items(), 
+                           row2=locals()['data_1'].items(), limit=per_page,
+                           page=page, page_count=int((item_counts/per_page)+1), total=item_counts)
 
 
 @application.route("/review")
@@ -29,11 +47,9 @@ def view_review():
     return render_template("review.html")
 
 
-
 @application.route("/reg_reviews")
 def reg_reviews():
     return render_template("reg_reviews.html")
-
 
 
 @application.route("/submit_item_post", methods=['POST'])
@@ -44,6 +60,7 @@ def reg_item_submit_post():
     DB.insert_item(data['name'], data, image_file.filename)
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
+
 @application.route("/login")
 def login():
     return render_template("login.html")
@@ -51,11 +68,11 @@ def login():
 
 @application.route("/login_confirm", methods=['POST'])
 def login_user():
-    id_=request.form['id']
-    pw=request.form['pw']
+    id_ = request.form['id']
+    pw = request.form['pw']
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
-    if DB.find_user(id_,pw_hash):
-        session['id']=id_
+    if DB.find_user(id_, pw_hash):
+        session['id'] = id_
         return redirect(url_for('view_list'))
     else:
         flash("Wrong ID or PW!")
@@ -77,11 +94,25 @@ def register_user():
     else:
         flash("user id already exist!")
         return render_template("signup.html")
-    
+
+
 @application.route("/logout")
 def logout_user():
     session.clear()
-    return redirect(url_for('list_restaurants'))
+    return redirect(url_for('view_list'))
+
+
+@application.route("/dynamicurl/<varible_name>/")
+def DynamicUrl(varible_name):
+    return str(varible_name)
+
+
+@application.route("/view_detail/<name>/")
+def view_item_detail(name):
+    print("###name:",name)
+    data = DB.get_item_byname(str(name))
+    print("####data:",data)
+    return render_template("detail.html", name=name, data=data)
 
 
 if __name__ == "__main__":
