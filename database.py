@@ -71,4 +71,16 @@ class DBhandler:
             if key_value == name:
                 target_value=res.val()
         return target_value
+    
+    def search_items(self, column_name, search_keyword):
+        items = self.db.child("item").get()
+        results = []
+
+        for res in items.each():
+            value = res.val()
+
+        if column_name in value and value[column_name] == search_keyword:
+            results.append(value)
+
+        return results
 

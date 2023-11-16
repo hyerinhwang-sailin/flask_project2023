@@ -115,5 +115,16 @@ def view_item_detail(name):
     return render_template("detail.html", name=name, data=data)
 
 
+@application.route("/search", methods=['GET', 'POST'])
+def search_items():
+    if request.method == 'POST':
+        column_name = request.form['column_name']
+        search_keyword = request.form['search_keyword']
+        results = DB.search_items(column_name, search_keyword)
+        return render_template("search_results.html", results=results)
+
+    return render_template("search.html")
+
+
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)

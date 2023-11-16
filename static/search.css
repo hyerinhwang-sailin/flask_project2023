@@ -1,0 +1,51 @@
+
+h2{
+  text-align: center;
+  margin: 30px;
+}
+.search-results {
+    max-width: 1200px;
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; /* 가로 공간 균등 분배 */
+}
+
+.product-box {
+    width: 46%; /* 상품 박스의 폭 설정 (한 줄에 두 개) */
+    height: 180px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.product-content {
+  display: flex; /* 상품 이미지 및 상품 정보를 가로로 배치 */
+  flex-direction: row;
+
+}
+.product-box img {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 30px;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1px;
+  justify-content: space-between;
+    padding: 10px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: 16px;
+}
