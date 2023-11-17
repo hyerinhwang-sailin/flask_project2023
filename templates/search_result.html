@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+{% block head %}
+    <!-- search_result.html -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='search.css') }}">
+{% endblock head %}
+
+{% block section %}
+{% if results %}
+    <h2>검색 결과</h2>
+    <table>
+        <tr>
+            <th>상품 이름</th>
+            <th>가격</th>
+            <th>이미지</th>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td><a href="{{ url_for('view_item_detail', name=result.name) }}">{{ result.name }}</a></td>
+            <td>{{ result.price }}</td>
+            <td><img src="{{ result.img_path }}" alt="{{ result.name }}" width="140" height="200"></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>검색 결과가 없습니다.</p>
+{% endif %}
+{% endblock section %}

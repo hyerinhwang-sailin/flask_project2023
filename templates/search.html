@@ -1,94 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="search.css">
-    <link rel="stylesheet" href="nav_foo.css">
-    <title>검색 결과</title>
-</head>
-<body>
-  <header>
-    <a href="/">
-        <img src="logo.jpg" alt="로고">
-    </a>
-</header>
+{% extends "index.html" %}
 
-<div class="nav">
-    <ul>
-        <li><a href="/list">List</a></li>
-    <li><a href="/review">Review</a></li>
-    <li><a href="/reg_items">Register Items</a></li>
-    <li><a href="/reg_reviews">Register Reviews</a></li>
-    </ul>
-    <form action="/search" method="post" onsubmit="return validateSearch()">
+{% block section %}
+<!DOCTYPE html>
+
+<body>
+    <form action="/search_result" method="get"> <!-- 검색 결과를 /search_result로 요청하도록 수정 -->
         <input type="text" name="search" id="search" placeholder="찾고 싶은 물건을 검색해 보세요!">
         <button type="submit">검색</button>
     </form>
-</div>
-
-<h2>00에 대한 검색결과</h2>
-    <div class="search-results">
-        <div class="product-box">
-            <div class="product-content">
-                <img src="logo.jpg" alt="상품 이미지 1">
-                <div class="product-details">
-                    <p class="product-name">상품명 1</p>
-                    <p class="product-price">10000원</p>
-                </div>
-            </div>
-        </div>
-        <div class="product-box">
-            <div class="product-content">
-                <img src="logo.jpg" alt="상품 이미지 2">
-                <div class="product-details">
-                    <p class="product-name">상품명 2</p>
-                    <p class="product-price">10000원</p>
-                </div>
-            </div>
-        </div>
-        <!-- 다른 상품 박스들을 추가 -->
-        <div class="product-box">
-          <div class="product-content">
-              <img src="logo.jpg" alt="상품 이미지 3">
-              <div class="product-details">
-                  <p class="product-name">상품명 3</p>
-                  <p class="product-price">10000원</p>
-              </div>
-          </div>
-      </div>
-      <div class="product-box">
-        <div class="product-content">
-            <img src="logo.jpg" alt="상품 이미지 4">
-            <div class="product-details">
-                <p class="product-name">상품명 4</p>
-                <p class="product-price">10000원</p>
-            </div>
-        </div>
-    </div>
-    <div class="product-box">
-      <div class="product-content">
-          <img src="logo.jpg" alt="상품 이미지 5">
-          <div class="product-details">
-              <p class="product-name">상품명 5</p>
-              <p class="product-price">10000원</p>
-          </div>
-      </div>
-  </div>
-  <div class="product-box">
-    <div class="product-content">
-        <img src="logo.jpg" alt="상품 이미지 6">
-        <div class="product-details">
-            <p class="product-name">상품명 6</p>
-            <p class="product-price">10000원</p>
-        </div>
-    </div>
-</div>
-    </div>
-    <div class="footer">
-      <h2>Ewha O! Soso Market</h2>
-      <p>52, Ewhayeodae-gil, Seodaemun-gu, Seoul, Republic of Korea</p>
-      <p>E-mail : 5soso_market@ewhain.net</p>
-    </div>
 </body>
-</html>
+{% endblock section %}

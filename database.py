@@ -11,6 +11,7 @@ class DBhandler:
 
     def insert_item(self, name, data, img_path):
         item_info = {
+            "name": name,  # 이 부분을 추가하여 상품 이름을 지정
             "seller": data['seller'],
             "addr": data['addr'],
             "email": data['email'],
@@ -23,6 +24,8 @@ class DBhandler:
         self.db.child("item").child(name).set(item_info)
         print(data, img_path)
         return True
+
+
 
     def insert_user(self, data, pw):
         user_info = {
@@ -72,15 +75,23 @@ class DBhandler:
                 target_value=res.val()
         return target_value
     
-    def search_items(self, column_name, search_keyword):
+    def search_items(self, search_keyword):
         items = self.db.child("item").get()
         results = []
 
         for res in items.each():
             value = res.val()
 
-        if column_name in value and value[column_name] == search_keyword:
-            results.append(value)
+            if "name" in value and search_keyword in value["name"]:
+                results.append(value)
 
-        return results
+    # 검색 조건을 디버그하여 확인
+        print("검색어:", search_keyword)
+        print("검색 결과:", results)
 
+        return results  # 이 부분을 추가하여 검색 결과를 반환합니다.
+
+
+
+
+    
