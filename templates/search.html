@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+
+{% block section %}
+<!DOCTYPE html>
+
+<body>
+    <form action="/search_result" method="get"> <!-- 검색 결과를 /search_result로 요청하도록 수정 -->
+        <input type="text" name="search" id="search" placeholder="찾고 싶은 물건을 검색해 보세요!">
+        <button type="submit">검색</button>
+    </form>
+</body>
+{% endblock section %}

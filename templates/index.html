@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <script src="{{ url_for('static', filename='main.js')}}" defer></script>
+    </head>
+<body>
+    <style>
+
+    </style>
+
+    <header>
+        <a href="/">
+            <img src="{{ url_for('static', filename='/images/logo.jpg')}}" alt="로고">
+        </a>
+    </header>
+
+    <nav class="navbar">
+        <ul class="navbar__menu">
+            
+            <li><a href="/list">List</a></li>
+        <li><a href="/review">Review</a></li>
+        <li><a href="/reg_items">Register Items</a></li>
+        <li><a href="/reg_reviews">Register Reviews</a></li>
+            {% if session['id'] %}
+                <li><a href="/logout"><b>{{session['id']}}님 반갑습니다!</b> logout</a></li>
+                {% else %}
+                <li><a href="/login">login</a></li>
+                {% endif %}
+        </ul>
+        <form action="/search" method="post" onsubmit="return validateSearch()">
+            <input type="text" name="search" id="search" placeholder="찾고 싶은 물건을 검색해 보세요!">
+            <button type="submit">검색</button>
+        </form>
+    </nav>
+    <section style>
+        {% block section %}
+
+        {% endblock section %}      
+
+    </section>
+
+    <div class="footer">
+      <h2>Ewha O! Soso Market</h2>
+      <p>52, Ewhayeodae-gil, Seodaemun-gu, Seoul, Republic of Korea</p>
+      <p>E-mail : 5soso_market@ewhain.net</p>
+    </div>
+</body>
+</html>

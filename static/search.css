@@ -1,0 +1,62 @@
+/* search.css */
+
+h2 {
+    text-align: center;
+    margin: 30px;
+}
+
+.search-results {
+    max-width: 1200px;
+    margin: 5px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product-box {
+    width: 48%; /* 상품 박스의 폭 설정 (한 줄에 두 개) */
+    height: 260px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.product-box:hover {
+    background-color: #f5f5f5;
+}
+
+.product-box img {
+    width: 100px;
+    height: 160px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 16px;
+}
+
+.product-link {
+    color: #006400; /* 상품 이름의 링크 색상 설정 */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* ... 기타 스타일 코드 ... */
