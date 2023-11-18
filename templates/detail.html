@@ -17,4 +17,10 @@
         {% endif %}
     </p>
     <img src="../../static/images/{{data.img_path}}", width=140, height=200>
+
+    <!-- 추가: 삭제 버튼을 추가하고 아이템을 삭제할 수 있는 링크 생성 -->
+    <form method="POST" action="/delete_item/{{ name }}">
+        <button type="submit">Delete</button>
+    </form>
+
 {% endblock section %}

@@ -2,11 +2,38 @@
 
 {% block section %}
 <!DOCTYPE html>
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Search</title>
+</head>
 <body>
-    <form action="/search_result" method="get"> <!-- 검색 결과를 /search_result로 요청하도록 수정 -->
-        <input type="text" name="search" id="search" placeholder="찾고 싶은 물건을 검색해 보세요!">
-        <button type="submit">검색</button>
+    <h1>Product Search</h1>
+    <form action="/search" method="POST">  <!-- 여기를 /search로 변경 -->
+        <input type="text" name="keyword" placeholder="Search for products">
+        <button type="submit">Search</button>
     </form>
+    <!-- 추가: 검색 결과를 테이블로 표시 -->
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in results %}
+            <tr>
+                <td><img src="{{ url_for('static', filename='images/' + product.img_path) }}" alt="{{ product.name }}" width="140" height="200"></td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td><a href="/view_item_detail/{{ product.name }}">Details</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
+</html>
 {% endblock section %}

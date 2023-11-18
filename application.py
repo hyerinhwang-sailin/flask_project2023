@@ -3,11 +3,20 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 from database import DBhandler
 import hashlib
 import sys
+import firebase_admin
+from firebase_admin import credentials, db
 
 application = Flask(__name__, template_folder="templates", static_folder="static")
 application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
+
+
+# Firebase Admin SDK 초기화
+cred = credentials.Certificate("authentication/market-ososo-firebase-adminsdk-j1xam-5e6e153b46.json")  # 자신의 서비스 계정 키 경로로 설정
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://market-ososo.firebaseio.com'  # Firebase 프로젝트의 데이터베이스 URL로 설정
+})
 
 
 @application.route("/")
@@ -121,17 +130,18 @@ def view_item_detail(name):
 def search():
     if request.method == 'POST':
         try:
-            search_keyword = request.form['search_keyword']
-            # DB 객체를 사용하여 DBhandler 클래스의 인스턴스를 생성
-            db_handler = DB()
-            results = db_handler.search_items(search_keyword)  # 검색 결과를 가져옴
+            keyword = request.form['keyword']  # 폼 필드 이름을 'keyword'로 수정
+            # DBhandler 클래스의 인스턴스를 생성
+            db_handler = DB  # 괄호를 추가하지 않습니다.
+            results = db_handler.search_items(keyword)  # 검색 결과를 가져옴
 
             # 검색 결과를 확인
             print("검색 결과:", results)
 
+            # 검색 결과를 search_result.html로 렌더링
             return render_template("search_result.html", results=results)
         except KeyError:
-            flash("Missing 'search_keyword' in the request.")
+            flash("Missing 'keyword' in the request.")
             return render_template("search.html")
 
     return render_template("search.html")
@@ -153,12 +163,28 @@ def search_result():
 def view_item_details(name):
     # DBhandler 클래스의 get_item_byname 메서드를 사용하여 해당 상품의 정보를 가져옵니다.
     data = DB.get_item_byname(name)
-    
+
     if data:
         return render_template("detail.html", name=name, data=data)
     else:
         # 해당 상품이 존재하지 않을 경우 처리 (예: 에러 페이지 또는 다른 처리)
         return render_template("error.html", message="해당 상품을 찾을 수 없습니다.")
+
+
+@application.route("/delete_item/<name>", methods=['POST'])
+def delete_item(name):
+    try:
+        # DBhandler 클래스의 인스턴스를 생성
+        db_handler = DB  # 괄호를 추가하지 않습니다.
+
+        # 아이템 삭제를 시도하고 성공하면 상품 목록 페이지로 리디렉션
+        if db_handler.delete_item(name):
+            return redirect(url_for("view_list"))
+        else:
+            flash("Error deleting item.")
+            return redirect(url_for("view_list"))
+    except Exception as e:
+        return str(e)
 
 
 if __name__ == "__main__":
