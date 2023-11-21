@@ -1,27 +1,27 @@
 {% extends "index.html" %}
 
 {% block section %}
-{% if results %}
-    <p>
-        검색 결과 -- 현재까지 {{ results|length }}개의 상품이 검색되었습니다.
-    </p>
-    <table>
-        <tr>
-            {% for product in results %}
-            <td>상품 이름: {{ product.name }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for product in results %}
-            <td onclick="location.href='/view_item_details/{{ product.name }}/';" style="cursor: pointer;">
-                <img src="static/images/{{ product.img_path }}" width="140" height="200">
-            </td>
-            {% endfor %}
-        </tr>
-    </table>
-{% else %}
-    <p>
-        검색 결과가 없습니다.
-    </p>
-{% endif %}
+    <h2>검색 결과</h2>
+    {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>상품 이름</th>
+                    <th>가격</th>
+                    <th>이미지</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in results %}
+                <tr>
+                    <td><a href="/view_item_details/{{ product['name'] }}">{{ product['name'] }}</a></td>
+                    <td>{{ product['price'] }}</td>
+                    <td><img src="{{ url_for('static', filename='images/' + product['img_path']) }}" alt="{{ product['name'] }}" width="140" height="200"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>검색 결과가 없습니다.</p>
+    {% endif %}
 {% endblock section %}
