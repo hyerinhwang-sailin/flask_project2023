@@ -1,26 +1,39 @@
 {% extends "index.html" %}
 
 {% block section %}
-    <p>
-        item name is <b>{{name}}</b> and address is {{data.addr}}
-       </p>
-    <p>
-    item tel. is {{data.phone}} and category is {{data.category}}
-    </p>
-    <p>
-        For payment, the credit card is 
-        {% if data['card'] == "Y" %}
-        accepted!
+   
+       <div class="product-details">
+        <div class="product-photos">
+            <img src="../../static/images/{{data.img_path}}", width=140, height=200>
+        </div>
+        <div class="profile-section">
+            <img src="{{ url_for('static', filename='/images/profile.jpg')}}" alt="프로필 사진">
+            <div class="profile-details">
+                <p class="profile-name">판매자 {{data.nickname}}</p>
+                <p class="profile-location">거래장소 : {{data.addr}} / 연락처: {{data.phone}} </p>
+                <div class="star-rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="product-info">
+          <h3><b>{{name}}</b></h3>
+          <p class="product-category" style="font-size: 14px;">{{data.category}} / 판매중 / 7시간전</p>
+          <p class="product-price">20000원 
+            {% if data['card'] == "Y" %} (카드 결제 가능)
         {% endif %}
-        {% if data['card'] == "N" %}
-        NOT accepted!
+        {% if data['card'] == "N" %} (카드 결제 불가능)
         {% endif %}
-    </p>
-    <img src="../../static/images/{{data.img_path}}", width=140, height=200>
+          </p>
 
-    <!-- 추가: 삭제 버튼을 추가하고 아이템을 삭제할 수 있는 링크 생성 -->
-    <form method="POST" action="/delete_item/{{ name }}">
-        <button type="submit">Delete</button>
-    </form>
+          <p class="product-description">
+            상품 설명 작성
+          </p>
+          <p class="like-chat-read" style="font-size: 14px;">찜 15 / 채팅 2 / 조회수 30</p>
+      </div>
 
+    </div>
 {% endblock section %}
