@@ -5,48 +5,52 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='product_detail.css')}}">
         <script src="{{ url_for('static', filename='main.js')}}" defer></script>
     </head>
 <body>
     <style>
-
     </style>
+    
+     <div class="nav_top">
+         {% if session['id'] %}
+        <a href="/logout"><b>{{session['id']}}님 반갑습니다!   </b>로그아웃</a>
+        {% else %}
+        <a href="/signup">회원가입</a>
+        <a href="/login">로그인</a>
+        {% endif %}
+        </div>
 
     <header>
         <a href="/">
-            <img src="{{ url_for('static', filename='/images/logo.jpg')}}" alt="로고">
+            <img src="{{ url_for('static', filename='/images/logo.png')}}" alt="로고">
         </a>
     </header>
 
     <nav class="navbar">
-        <ul class="navbar__menu">
-            
-            <li><a href="/list">List</a></li>
+        <ul class="navbar__menu">            
+        <li><a href="/list">List</a></li>
         <li><a href="/review">Review</a></li>
         <li><a href="/reg_items">Register Items</a></li>
-        <li><a href="/reg_reviews">Register Reviews</a></li>
-            {% if session['id'] %}
-                <li><a href="/logout"><b>{{session['id']}}님 반갑습니다!</b> logout</a></li>
-                {% else %}
-                <li><a href="/login">login</a></li>
-                {% endif %}
+        <li><a href="/reg_reviews">Register Reviews</a></li>            
         </ul>
         <form action="/search" method="post" onsubmit="return validateSearch()">
-            <input type="text" name="search" id="search" placeholder="찾고 싶은 물건을 검색해 보세요!">
+            <input type="text" name="keyword" id="keyword" placeholder="찾고 싶은 물건을 검색해 보세요!">
             <button type="submit">검색</button>
         </form>
     </nav>
-    <section style>
+    <section>
         {% block section %}
-
-        {% endblock section %}      
+        {% endblock section %}    
 
     </section>
 
-    <div class="footer">
+    <div class="footer" style="margin-top: 20%">
       <h2>Ewha O! Soso Market</h2>
       <p>52, Ewhayeodae-gil, Seodaemun-gu, Seoul, Republic of Korea</p>
       <p>E-mail : 5soso_market@ewhain.net</p>
     </div>
+    
 </body>
 </html>

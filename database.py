@@ -25,8 +25,6 @@ class DBhandler:
         print(data, img_path)
         return True
 
-
-
     def insert_user(self, data, pw):
         user_info = {
             "id": data['id'], "pw": pw, "nickname": data['nickname']
@@ -60,11 +58,11 @@ class DBhandler:
             if value['id'] == id_ and value['pw'] == pw_:
                 return True
         return False
-    
+
     def get_items(self):
         items = self.db.child("item").get().val()
         return items
-    
+
     def get_item_byname(self, name):
         items = self.db.child("item").get()
         target_value=""
@@ -72,9 +70,9 @@ class DBhandler:
         for res in items.each():
             key_value = res.key()
             if key_value == name:
-                target_value=res.val()
+                target_value = res.val()
         return target_value
-    
+
     def search_items(self, search_keyword):
         items = self.db.child("item").get()
         results = []
@@ -91,7 +89,12 @@ class DBhandler:
 
         return results  # 이 부분을 추가하여 검색 결과를 반환합니다.
 
+    def delete_item(self, name):
+        try:
+            # 아이템 삭제
+            self.db.child("item").child(name).remove()
+            return True
+        except Exception as e:
+            print("Error deleting item:", str(e))
+            return False
 
-
-
-    
