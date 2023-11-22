@@ -1,62 +1,58 @@
-/* search.css */
-
-h2 {
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    margin: 30px;
 }
 
-.search-results {
-    max-width: 1200px;
-    margin: 5px auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+
+/* 각 셀 스타일 */
+td {
+    border: 2px solid #fff;
+    width: 15%;
+    height: 50px;
 }
 
-.product-box {
-    width: 48%; /* 상품 박스의 폭 설정 (한 줄에 두 개) */
-    height: 260px;
+.search-list{
+    margin-top: 10px;
+     width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    
+}
+
+.search-product-name {
     background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    text-align: center;
+    white-space: nowrap;
+    margin-top: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.product-box:hover {
-    background-color: #f5f5f5;
-}
-
-.product-box img {
-    width: 100px;
-    height: 160px;
-    object-fit: cover;
-    margin-right: 20px;
-}
-
-.product-details {
-    flex: 1;
+.search-product-container {
+    position: relative;
+    height: 250px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
 }
 
-.product-name {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/* 제품 이미지 컨테이너 클래스 스타일 */
+.search-product-image {
+    position: relative;
+    border: 2px solid #006400;
+    width: 150px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
-.product-price {
-    font-size: 16px;
+.search-product-price{
+    height: 10%;
 }
-
-.product-link {
-    color: #006400; /* 상품 이름의 링크 색상 설정 */
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* ... 기타 스타일 코드 ... */
