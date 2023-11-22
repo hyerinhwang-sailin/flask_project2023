@@ -1,39 +1,36 @@
 {% extends "index.html" %}
 
 {% block section %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Product Search</title>
-</head>
-<body>
-    <h1>Product Search</h1>
-    <form action="/search" method="POST">  <!-- 여기를 /search로 변경 -->
-        <input type="text" name="keyword" placeholder="Search for products">
-        <button type="submit">Search</button>
-    </form>
-    <!-- 추가: 검색 결과를 테이블로 표시 -->
+    <h2>검색 결과</h2>
+ {% if results %}
+    <p>
+        검색 결과 -- 현재까지 {{ results|length }}개의 상품이 검색되었습니다.
+    </p>
+
+<div class="search-list">
     <table>
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
+        <tr>
             {% for product in results %}
-            <tr>
-                <td><img src="{{ url_for('static', filename='images/' + product.img_path) }}" alt="{{ product.name }}" width="140" height="200"></td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
-                <td><a href="/view_item_detail/{{ product.name }}">Details</a></td>
-            </tr>
+            <td>
+                <br>
+                <div class="search-product-container" onclick="location.href='/view_item_details/{{ product['name'] }}/';" style="cursor: pointer;">
+                        <img src="{{ url_for('static', filename='images/' + product['img_path']) }}" width="140" height="200", class="search-product-image">
+                        <div class="search-product-name">{{ product['name'] }}</div>
+                        <div class="search-product-price"><p>30,000원</p></div>
+                        <br>
+                </div>
+            </td>
             {% endfor %}
-        </tbody>
+        </tr> 
     </table>
-</body>
-</html>
+</div>
+{% else %}
+    <p>
+        검색 결과가 없습니다.
+    </p>
+{% endif %}
 {% endblock section %}
+
+
+
+
