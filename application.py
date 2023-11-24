@@ -54,7 +54,31 @@ def view_list():
 
 @application.route("/review")
 def view_review():
-    return render_template("review.html")
+    page = request.args.get("page", 0, type=int)
+    per_page=6 # item count to display per page
+    per_row=3# item count to display per row
+    row_count=int(per_page/per_row)
+    start_idx=per_page*page
+    end_idx=per_page*(page+1)
+    data = DB.get_reviews() #read the table
+    item_counts = len(data)
+    data = dict(list(data.items())[start_idx:end_idx])
+    tot_count = len(data)
+    for i in range(row_count):#last row
+        if (i == row_count-1) and (tot_count%per_row != 0):
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
+        else:
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:(i+1)*per_row])
+    return render_template("review.html", datas=data.items(), row1=locals()['data_0'].items(), row2=locals()['data_1'].items(),
+                           limit=per_page, page=page, page_count=int((item_counts/per_page)+1), total=item_counts)
+
+
+@application.route("/view_review_detail/<name>/")
+def view_review_detail(name):
+    print("###review_name:", name)
+    review_data = DB.get_review_byname(name)
+    print("####review_data:", review_data)
+    return render_template("review_detail.html", review_data=review_data)
 
 
 @application.route("/reg_reviews")
@@ -185,6 +209,40 @@ def delete_item(name):
             return redirect(url_for("view_list"))
     except Exception as e:
         return str(e)
+
+
+@application.route("/reg_review_init/<name>/")
+def reg_review_init(name):
+    return render_template("reg_reviews.html", name=name)
+
+
+@application.route("/reg_review", methods=['POST'])
+def reg_review():
+    data = request.form
+    DB.reg_review(data)
+    return redirect(url_for('view_review'))
+
+
+@application.route('/show_heart/<name>/', methods=['GET'])
+def show_heart(name):
+    if 'id' in session:
+        my_heart = DB.get_heart_byname(session['id'], name)
+        return jsonify({'my_heart': my_heart})
+    else:
+        # 사용자가 로그인되지 않은 경우에 대한 처리
+        return jsonify({'error': '로그인이 필요합니다'})
+
+
+@application.route('/like/<name>/', methods=['POST'])
+def like(name):
+    my_heart = DB.update_heart(session['id'],'Y',name)
+    return jsonify({'msg': '좋아요 완료!'})
+
+
+@application.route('/unlike/<name>/', methods=['POST'])
+def unlike(name):
+    my_heart = DB.update_heart(session['id'],'N',name)
+    return jsonify({'msg': '안좋아요 완료!'})
 
 
 if __name__ == "__main__":

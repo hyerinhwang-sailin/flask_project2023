@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% block section %}
+
+
+    <div class="review-details">
+        
+         <div class="profile-section">
+            <img src="{{ url_for('static', filename='/images/profile.jpg')}}" alt="프로필 사진">
+            <div class="profile-details">
+                <p class="profile-name">구매자</p>
+            </div>
+             
+        </div>
+        <hr>
+        <div class="review-title">
+            <h1>{{ review_data.title }}</h1>
+        </div>
+        <div class="review-info">
+             <img src="../../static/images/{{ review_data.img_path }}" width="250" height="300" alt="Product Image" class="review-image">
+            <p><strong>별점:</strong> {{ review_data.rate }}/5</p>
+            <p><strong>리뷰 내용:</strong></p>
+            <p>{{ review_data.review }}</p>          
+           
+        </div>
+    </div>
+
+{% endblock section %}

@@ -1,0 +1,93 @@
+.review-title {
+    text-align: center;
+}
+
+.review-info{
+    float: center;
+    text-align: center;
+}
+
+.review-details {
+    max-width: 800px;
+    margin: 10px auto;
+    background-color: #fff;
+    border: 1px solid #fff;
+    padding: 20px;
+}
+
+.review-info img {
+    max-height: 300px;
+    object-fit: cover;
+    margin: 10px;
+    border: 2px solid #006400;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+/***********************************************/
+
+
+.profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.profile-section img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: -5px;
+}
+
+.profile-location {
+    font-size: 16px;
+    color: #777;
+}
+
+.star-rating {
+  color: #006400; 
+  display: flex;
+  justify-content: flex-end;
+}
+
+hr{
+  margin: 30px;
+}
+
+.product-category, .like-chat-read {
+  font-size: 16px;
+    color: #777;
+}
+
+.product-price{
+  font-weight: bold;
+  color: #006400;
+}
+
+.product-info p {
+  font-size: 18px;
+  text-align: left;      
+}
+
+.review-button {
+    border: 5px solid #006400; 
+    color: #006400;    
+    float: right; 
+    margin: -40px 20px 0 0; /* Adjust margin as needed to control spacing */
+    width: 100px; 
+    height: 40px;
+}
